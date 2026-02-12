@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mrunal - Modernizing Legacy</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:#232629;color:#eff0f1;line-height:1.6}
+.container{max-width:80%;margin:0 auto;padding:2rem 1rem}
+@media(max-width:768px){.container{max-width:100%;padding:1rem}}
+
+/* Hero Section */
+.hero{text-align:center;padding:4rem 0 2rem;position:relative}
+.hero h1{font-size:2.5rem;font-weight:300;color:#eff0f1;position:relative;display:inline-block;padding:0 3rem}
+.hero h1::before,.hero h1::after{content:'';position:absolute;top:50%;width:100px;height:1px;background:linear-gradient(to right,transparent,#4d4d4d)}
+.hero h1::before{right:100%;margin-right:1rem}
+.hero h1::after{left:100%;margin-left:1rem;background:linear-gradient(to left,transparent,#4d4d4d)}
+@media(max-width:768px){.hero h1{font-size:1.8rem;padding:0 1rem}.hero h1::before,.hero h1::after{width:50px}}
+
+/* Sub-hero Grid */
+.subhero{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:3rem 0;border:1px solid #31363b}
+.subhero-item{padding:1.5rem;text-align:center;color:#bdc3c7;font-size:0.95rem;border-right:1px solid #31363b}
+.subhero-item:last-child{border-right:none}
+@media(max-width:768px){.subhero{grid-template-columns:1fr;gap:0}.subhero-item{border-right:none;border-bottom:1px solid #31363b;padding:1rem}.subhero-item:last-child{border-bottom:none}}
+
+/* Projects Section */
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:4rem 0}
+@media(max-width:768px){.projects{grid-template-columns:1fr;gap:1.5rem}}
+.project-card{background:#31363b;border:1px solid #4d4d4d;border-radius:4px;overflow:hidden;transition:box-shadow 0.3s}
+.project-card:hover{box-shadow:0 2px 12px rgba(61,174,233,0.2)}
+.project-card img{width:100%;height:auto;display:block}
+.project-content{padding:1.5rem}
+.project-content h3{font-size:1.1rem;margin-bottom:0.5rem;color:#eff0f1}
+.project-content p{font-size:0.9rem;color:#bdc3c7;margin-bottom:1rem;line-height:1.5}
+.project-btn{display:inline-block;padding:0.5rem 1.5rem;background:#3daee9;color:#232629;text-decoration:none;border-radius:4px;font-size:0.9rem;transition:background 0.3s;font-weight:500}
+.project-btn:hover{background:#1d99f3}
+
+/* Social Links */
+.social{display:flex;justify-content:center;gap:2rem;margin:4rem 0;padding:2rem 0;border-top:1px solid #31363b;border-bottom:1px solid #31363b}
+.social a{color:#3daee9;font-size:1.8rem;text-decoration:none;transition:transform 0.3s}
+.social a:hover{transform:scale(1.2);color:#1d99f3}
+@media(max-width:768px){.social{gap:1.5rem;flex-wrap:wrap}}
+
+/* Achievements Section */
+.achievements{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:4rem 0}
+@media(max-width:768px){.achievements{grid-template-columns:1fr;gap:1.5rem}}
+.achievement-card{text-align:center;background:#31363b;border:1px solid #4d4d4d;border-radius:4px;padding:1rem;transition:box-shadow 0.3s}
+.achievement-card:hover{box-shadow:0 2px 12px rgba(61,174,233,0.2)}
+.achievement-card img{width:100%;height:auto;border-radius:4px;margin-bottom:1rem}
+.achievement-card h3{font-size:1.2rem;color:#eff0f1;font-weight:500}
+
+/* News Section */
+.news-container{margin:4rem 0}
+.news-container h2{text-align:center;font-size:1.8rem;margin-bottom:2rem;color:#eff0f1;font-weight:400}
+.news-scroll{max-height:400px;overflow-y:auto;border:1px solid #31363b;border-radius:4px;background:#31363b;padding:1.5rem}
+.news-scroll::-webkit-scrollbar{width:8px}
+.news-scroll::-webkit-scrollbar-track{background:#232629}
+.news-scroll::-webkit-scrollbar-thumb{background:#4d4d4d;border-radius:4px}
+.news-scroll::-webkit-scrollbar-thumb:hover{background:#3daee9}
+.news-item{padding:1rem 0;border-bottom:1px solid #4d4d4d}
+.news-item:last-child{border-bottom:none}
+.news-item h3{font-size:1.1rem;color:#eff0f1;margin-bottom:0.3rem}
+.news-date{font-size:0.85rem;color:#7f8c8d;margin-bottom:0.5rem}
+.news-body{font-size:0.95rem;color:#bdc3c7;margin-bottom:0.5rem}
+.news-link{color:#3daee9;text-decoration:none;font-size:0.9rem}
+.news-link:hover{text-decoration:underline;color:#1d99f3}
+
+/* Footer */
+footer{display:flex;justify-content:space-between;align-items:center;padding:2rem 0;margin-top:4rem;border-top:1px solid #31363b}
+.footer-left{font-size:1.2rem;color:#eff0f1;font-weight:300}
+.footer-right{font-size:0.9rem;color:#bdc3c7}
+@media(max-width:768px){footer{flex-direction:column;gap:1rem;text-align:center}}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Modernizing Legacy</h1>
+  </section>
+
+  <!-- Sub-hero Grid -->
+  <div class="subhero">
+    <div class="subhero-item">Studying at <br> NFSU, Guwahati</div>
+    <div class="subhero-item">Computer Science,<br> Cybersecurity,<br> Research</div>
+    <div class="subhero-item">C/C++, Elixir, Perl, <br> Emacs, Linux, Vulkan etc.</div>
+  </div>
+
+  <!-- Projects Section -->
+  <section class="projects">
+    <div class="project-card">
+      <img src="image1.png" alt="Project 1">
+      <div class="project-content">
+        <h3>[Project Title 1]</h3>
+        <p>[2-3 line description of your project. Explain what it does and technologies used.]</p>
+        <a href="#" class="project-btn">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="image2.png" alt="Project 2">
+      <div class="project-content">
+        <h3>[Project Title 2]</h3>
+        <p>[2-3 line description of your project. Explain what it does and technologies used.]</p>
+        <a href="#" class="project-btn">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="image3.png" alt="Project 3">
+      <div class="project-content">
+        <h3>[Project Title 3]</h3>
+        <p>[2-3 line description of your project. Explain what it does and technologies used.]</p>
+        <a href="#" class="project-btn">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="image4.png" alt="Project 4">
+      <div class="project-content">
+        <h3>[Project Title 4]</h3>
+        <p>[2-3 line description of your project. Explain what it does and technologies used.]</p>
+        <a href="#" class="project-btn">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="image5.png" alt="Project 5">
+      <div class="project-content">
+        <h3>[Project Title 5]</h3>
+        <p>[2-3 line description of your project. Explain what it does and technologies used.]</p>
+        <a href="#" class="project-btn">View Project</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Links -->
+  <section class="social">
+    <a href="https://youtube.com/@yourusername" title="YouTube">▶</a>
+    <a href="https://instagram.com/yourusername" title="Instagram">📷</a>
+    <a href="https://linkedin.com/in/yourusername" title="LinkedIn">in</a>
+    <a href="https://github.com/yourusername" title="GitHub">🐙</a>
+    <a href="mailto:your.email@example.com" title="Email">✉</a>
+    <a href="https://google.com" title="Photo Gallery" class="project-btn" style="font-size:1rem;padding:0.5rem 1rem">Gallery</a>
+    <a href="#" title="[Platform 1]">●</a>
+    <a href="#" title="[Platform 2]">●</a>
+  </section>
+
+  <!-- Achievements & Hobby Section -->
+  <section class="achievements">
+    <div class="achievement-card">
+      <img src="achievement1.png" alt="Achievement 1">
+      <h3>[Event Name & Award - Year]</h3>
+    </div>
+
+    <div class="achievement-card">
+      <img src="achievement2.png" alt="Achievement 2">
+      <h3>[Event Name & Award - Year]</h3>
+    </div>
+
+    <div class="achievement-card">
+      <img src="achievement3.png" alt="Achievement 3">
+      <h3>[Event Name & Award - Year]</h3>
+    </div>
+
+    <div class="achievement-card">
+      <img src="achievement4.png" alt="Achievement 4">
+      <h3>[Event Name & Award - Year]</h3>
+    </div>
+
+    <div class="achievement-card">
+      <img src="simracing.png" alt="Sim Racing">
+      <h3>Sim Racing Enthusiast</h3>
+    </div>
+  </section>
+
+  <!-- News/Blog Section -->
+  <section class="news-container">
+    <h2>Updates</h2>
+    <div class="news-scroll" id="newsContainer">
+      <p style="text-align:center;color:#bdc3c7">Loading news...</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="container">
+  <div class="footer-left">Modernizing Legacy</div>
+  <div class="footer-right">© Mrunal 2026</div>
+</footer>
+
+<script>
+// Fetch and display news from CSV
+fetch('news.csv')
+  .then(r=>r.text())
+  .then(data=>{
+    const lines=data.trim().split('\n');
+    const container=document.getElementById('newsContainer');
+    if(lines.length<2){container.innerHTML='<p style="text-align:center;color:#bdc3c7">No news available</p>';return}
+    container.innerHTML='';
+    for(let i=1;i<lines.length;i++){
+      const match=lines[i].match(/^"([^"]*)","([^"]*)","([^"]*)","([^"]*)"$/);
+      if(!match)continue;
+      const[,title,date,body,link]=match;
+      const item=document.createElement('div');
+      item.className='news-item';
+      item.innerHTML=`<h3>${title}</h3><div class="news-date">${date}</div><div class="news-body">${body}</div><a href="${link}" class="news-link">Learn more...</a>`;
+      container.appendChild(item);
+    }
+  })
+  .catch(()=>{
+    document.getElementById('newsContainer').innerHTML='<p style="text-align:center;color:#bdc3c7">Unable to load news</p>';
+  });
+</script>
+
+</body>
+</html>
