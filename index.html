@@ -1,228 +1,1414 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mrunal - Optimizing Architectures</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:#232629;color:#eff0f1;line-height:1.6}
-.container{max-width:80%;margin:0 auto;padding:2rem 1rem}
-@media(max-width:768px){.container{max-width:100%;padding:1rem}}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mrunal Bhamare — Optimizing Architectures</title>
 
-/* Hero Section */
-.hero{text-align:center;padding:4rem 0 2rem;position:relative}
-.hero h1{font-size:2.5rem;font-weight:300;color:#eff0f1;position:relative;display:inline-block;padding:0 3rem}
-.hero h1::before,.hero h1::after{content:'';position:absolute;top:50%;width:100px;height:1px;background:linear-gradient(to right,transparent,#4d4d4d)}
-.hero h1::before{right:100%;margin-right:1rem}
-.hero h1::after{left:100%;margin-left:1rem;background:linear-gradient(to left,transparent,#4d4d4d)}
-@media(max-width:768px){.hero h1{font-size:1.8rem;padding:0 1rem}.hero h1::before,.hero h1::after{width:50px}}
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-/* Sub-hero Grid */
-.subhero{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:3rem 0;border:1px solid #31363b}
-.subhero-item{padding:1.5rem;text-align:center;color:#bdc3c7;font-size:0.95rem;border-right:1px solid #31363b}
-.subhero-item:last-child{border-right:none}
-@media(max-width:768px){.subhero{grid-template-columns:1fr;gap:0}.subhero-item{border-right:none;border-bottom:1px solid #31363b;padding:1rem}.subhero-item:last-child{border-bottom:none}}
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
-/* Projects Section */
-.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:4rem 0}
-@media(max-width:768px){.projects{grid-template-columns:1fr;gap:1.5rem}}
-.project-card{background:#31363b;border:1px solid #4d4d4d;border-radius:4px;overflow:hidden;transition:box-shadow 0.3s}
-.project-card:hover{box-shadow:0 2px 12px rgba(61,174,233,0.2)}
-.project-card img{width:100%;height:auto;display:block}
-.project-content{padding:1.5rem}
-.project-content h3{font-size:1.1rem;margin-bottom:0.5rem;color:#eff0f1}
-.project-content p{font-size:0.9rem;color:#bdc3c7;margin-bottom:1rem;line-height:1.5}
-.project-btn{display:inline-block;padding:0.5rem 1.5rem;background:#3daee9;color:#232629;text-decoration:none;border-radius:4px;font-size:0.9rem;transition:background 0.3s;font-weight:500}
-.project-btn:hover{background:#1d99f3}
-.project-btn-disabled {display: inline-block; padding: 0.5rem 1.5rem; background: #31363b; color: #6c6f73; text-decoration: none; border-radius: 4px; font-size: 0.9rem; font-weight: 500; cursor: not-allowed; opacity: 0.65; pointer-events: none; border: 1px solid #d3d7cf;}
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            gl: {
+              dark: '#171321',       /* Primary deep GitLab dark background */
+              matrixBg: '#221f2d',   /* Staggered dark grid surface */
+              card: '#292633',       /* Hero & Updates card surface */
+              cardHover: '#343042',  /* Card hover state */
+              matrixCard: '#393644', /* Staggered checkerboard filled cell */
+              light: '#f9f8fa',      /* Projects top light background */
+              lightStep: '#e2e0e8',  /* Projects stepped gray band */
+              pink: '#e24389',       /* Accent label color */
+              muted: '#a29fab',      /* Muted text on dark */
+              textLight: '#625f6d',  /* Muted text on light cards */
+            }
+          }
+        }
+      }
+    };
+  </script>
 
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & MODERN BASE RESET
+       ========================================================================== */
+    :root {
+      --bg-dark: #171321;
+      --bg-matrix: #221f2d;
+      --bg-card: #292633;
+      --bg-card-hover: #343042;
+      --bg-matrix-card: #393644;
+      --bg-matrix-card-hover: #433f50;
+      --bg-light: #f9f8fa;
+      --bg-light-step: #e2e0e8;
+      --border-dark: rgba(255, 255, 255, 0.08);
+      --border-light: #dcdcde;
+      --accent-pink: #e24389;
+      --text-muted-dark: #a29fab;
+      --text-muted-light: #625f6d;
+    }
 
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: #ffffff;
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
- /* Social Links */
- .social{display:flex;justify-content:center;gap:2rem;margin:4rem 0;padding:2rem 0;border-top:1px solid #31363b;border-bottom:1px solid #31363b}
-.social a{color:#3daee9;font-size:1.8rem;text-decoration:none;transition:transform 0.3s}
-.social a:hover{transform:scale(1.2);color:#1d99f3}
-@media(max-width:768px){.social{gap:1.5rem;flex-wrap:wrap}}
+    /* Ensure all anchored sections scroll into view cleanly */
+    section[id] {
+      scroll-margin-top: 1.5rem;
+    }
 
-/* Achievements Section */
-.achievements{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:4rem 0}
-@media(max-width:768px){.achievements{grid-template-columns:1fr;gap:1.5rem}}
-.achievement-card{text-align:center;background:#31363b;border:1px solid #4d4d4d;border-radius:4px;padding:1rem;transition:box-shadow 0.3s}
-.achievement-card:hover{box-shadow:0 2px 12px rgba(61,174,233,0.2)}
-.achievement-card img{width:100%;height:auto;border-radius:4px;margin-bottom:1rem}
-.achievement-card h3{font-size:1.2rem;color:#eff0f1;font-weight:500}
+    /* ==========================================================================
+       2. SECTION 1: HERO & INTERACTIVE DOT MATRIX (Screenshot 1)
+       ========================================================================== */
+    .site-hero {
+      position: relative;
+      background-color: var(--bg-dark);
+      min-height: 86vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-dark);
+    }
 
-/* News Section */
-.news-container{margin:4rem 0}
-.news-container h2{text-align:center;font-size:1.8rem;margin-bottom:2rem;color:#eff0f1;font-weight:400}
-.news-scroll{max-height:400px;overflow-y:auto;border:1px solid #31363b;border-radius:4px;background:#31363b;padding:1.5rem}
-.news-scroll::-webkit-scrollbar{width:8px}
-.news-scroll::-webkit-scrollbar-track{background:#232629}
-.news-scroll::-webkit-scrollbar-thumb{background:#4d4d4d;border-radius:4px}
-.news-scroll::-webkit-scrollbar-thumb:hover{background:#3daee9}
-.news-item{padding:1rem 0;border-bottom:1px solid #4d4d4d}
-.news-item:last-child{border-bottom:none}
-.news-item h3{font-size:1.1rem;color:#eff0f1;margin-bottom:0.3rem}
-.news-date{font-size:0.85rem;color:#7f8c8d;margin-bottom:0.5rem}
-.news-body{font-size:0.95rem;color:#bdc3c7;margin-bottom:0.5rem}
-.news-link{color:#3daee9;text-decoration:none;font-size:0.9rem}
-.news-link:hover{text-decoration:underline;color:#1d99f3}
+    #hero-dot-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-/* Footer */
-footer{display:flex;justify-content:space-between;align-items:center;padding:2rem 0;margin-top:4rem;border-top:1px solid #31363b}
-.footer-left{font-size:1.2rem;color:#eff0f1;font-weight:300}
-.footer-right{font-size:0.9rem;color:#bdc3c7}
-@media(max-width:768px){footer{flex-direction:column;gap:1rem;text-align:center}}
-</style>
+    .vertical-motto {
+      position: absolute;
+      left: 1.5rem;
+      bottom: 2.25rem;
+      z-index: 10;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      color: rgba(255, 255, 255, 0.55);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      user-select: none;
+    }
+
+    .vertical-motto-square {
+      width: 5px;
+      height: 5px;
+      background-color: #ffffff;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 1100px) {
+      .vertical-motto {
+        display: none;
+      }
+    }
+
+    .hero-container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 5;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      min-height: 86vh;
+      border-left: 1px solid var(--border-dark);
+      border-right: 1px solid var(--border-dark);
+    }
+
+    .hero-col {
+      border-right: 1px solid var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .hero-col:last-child {
+      border-right: none;
+    }
+
+    .hero-projects-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 1.35rem 1.5rem;
+      background: linear-gradient(90deg, rgba(107, 57, 52, 0.88) 0%, rgba(86, 37, 68, 0.92) 55%, rgba(56, 30, 66, 0.95) 100%);
+      border: 1px solid rgba(173, 102, 124, 0.45);
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 28px -6px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-projects-btn:hover {
+      background: linear-gradient(90deg, rgba(128, 68, 61, 0.95) 0%, rgba(108, 45, 86, 0.98) 55%, rgba(72, 38, 86, 1) 100%);
+      border-color: rgba(226, 67, 137, 0.65);
+      transform: translateY(-1px);
+    }
+
+    .hero-projects-btn .arrow-icon {
+      transition: transform 0.25s ease;
+    }
+
+    .hero-projects-btn:hover .arrow-icon {
+      transform: translateX(5px);
+    }
+
+    .hero-step-card {
+      background-color: var(--bg-card);
+      padding: 1.65rem 1.75rem;
+      height: 118px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      transition: background-color 0.2s ease;
+      border-top: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .hero-step-card:hover {
+      background-color: var(--bg-card-hover);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-col {
+        border-right: none;
+        border-bottom: 1px solid var(--border-dark);
+      }
+      .hero-step-spacer {
+        display: none;
+      }
+    }
+
+    /* ==========================================================================
+       3. SECTION 2: INFINITE SCROLLING PROFILE MARQUEE (Screenshot 2)
+       ========================================================================== */
+    .marquee-bar {
+      background-color: var(--bg-dark);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 2.1rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .marquee-bar::before,
+    .marquee-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .marquee-bar::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg-dark) 15%, transparent 100%);
+    }
+
+    .marquee-bar::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg-dark) 15%, transparent 100%);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: scrollMarquee 32s linear infinite;
+      align-items: center;
+    }
+
+    .marquee-bar:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes scrollMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .profile-logo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin: 0 3.25rem;
+      padding: 0.6rem 1.1rem;
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .profile-logo-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       4. SECTION 3: LIGHT PROJECTS BENTO SECTION (Screenshot 3)
+       ========================================================================== */
+    .projects-section {
+      position: relative;
+      background-color: var(--bg-light);
+      color: var(--bg-dark);
+      padding: 5.5rem 0 5rem;
+      overflow: hidden;
+      background-image:
+        linear-gradient(to right, rgba(23, 19, 33, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(23, 19, 33, 0.035) 1px, transparent 1px);
+      background-size: 38px 38px;
+    }
+
+    /* Stepped gray background band extending flush to bottom of section */
+    .projects-gray-band {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 304px;
+      bottom: 0;
+      background-color: var(--bg-light-step);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .pixel-step-cluster {
+      position: absolute;
+      z-index: 2;
+      pointer-events: none;
+      display: grid;
+      grid-template-columns: repeat(8, 38px);
+      grid-auto-rows: 38px;
+    }
+
+    .pixel-cell-gray {
+      background-color: var(--bg-light-step);
+    }
+
+    .gl-project-card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .gl-project-card:hover {
+      border-color: #b8b6c2;
+      box-shadow: 0 12px 32px rgba(23, 19, 33, 0.08);
+    }
+
+    .gl-project-thumb {
+      background-color: var(--bg-dark);
+      height: 235px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gl-project-thumb-wide {
+      height: 270px;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(139, 92, 246, 0.85) 0%, transparent 45%),
+        radial-gradient(circle at 60% 45%, rgba(249, 115, 22, 0.85) 0%, transparent 50%),
+        radial-gradient(circle at 80% 75%, rgba(236, 72, 153, 0.75) 0%, transparent 50%),
+        #f3f1f6;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .halftone-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(23, 19, 33, 0.16) 1px, transparent 1px);
+      background-size: 5px 5px;
+      pointer-events: none;
+    }
+
+    .gl-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--bg-dark);
+      text-decoration: none;
+      margin-top: auto;
+      padding-top: 0.75rem;
+    }
+
+    .gl-card-link span.chevron {
+      display: inline-block;
+      transition: transform 0.2s ease;
+      font-weight: 400;
+      font-size: 1.05rem;
+    }
+
+    .gl-card-link:hover span.chevron {
+      transform: translateX(4px);
+    }
+
+    /* ==========================================================================
+       5. SECTION 4: SKILLS & INTERESTS STAGGERED DARK MATRIX (Screenshot 4)
+       ========================================================================== */
+    .skills-section {
+      background-color: var(--bg-dark);
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skills-matrix-surface {
+      position: relative;
+      background-color: var(--bg-matrix);
+      border-top: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border-dark);
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 38px 38px;
+    }
+
+    .dark-pixel-block {
+      background-color: var(--bg-dark);
+    }
+
+    .staggered-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 1020px;
+      margin: 0 auto;
+      border-left: 1px solid rgba(255, 255, 255, 0.09);
+      border-right: 1px solid rgba(255, 255, 255, 0.09);
+      position: relative;
+      z-index: 5;
+    }
+
+    .matrix-cell {
+      min-height: 225px;
+      border-right: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border-dark);
+      position: relative;
+    }
+
+    .matrix-cell:nth-child(3n) {
+      border-right: none;
+    }
+
+    .matrix-filled-card {
+      background-color: var(--bg-matrix-card);
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background-color 0.25s ease;
+    }
+
+    .matrix-filled-card:hover {
+      background-color: var(--bg-matrix-card-hover);
+    }
+
+    .matrix-card-header {
+      padding: 0.85rem 1.35rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: #d6d4dc;
+      text-transform: uppercase;
+    }
+
+    .matrix-card-body {
+      padding: 1.5rem 1.35rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+
+    @media (max-width: 820px) {
+      .staggered-matrix-grid {
+        grid-template-columns: 1fr;
+      }
+      .matrix-cell-empty {
+        display: none;
+      }
+      .matrix-cell {
+        border-right: none;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
+  <!-- ==========================================================================
+       SECTION 1: HERO HEADER (Screenshot 1)
+       ========================================================================== -->
+  <header id="top" class="site-hero">
+    <!-- Interactive Cursor-Reactive Dot Matrix Canvas -->
+    <canvas id="hero-dot-canvas"></canvas>
 
-  <!-- Hero Section -->
-  <section class="hero">
-      <h1>Mrunal Bhamare</h1>
-      <br>
-      <h3>Optimizing Architectures</h3>
-  </section>
+    <!-- Bottom-Left Vertical Rotated Motto -->
+    <div class="vertical-motto" aria-hidden="true">
+      <span>CREATIVITY BEATS BRUTE FORCE</span>
+      <span class="vertical-motto-square"></span>
+    </div>
 
-  <!-- Sub-hero Grid -->
-  <div class="subhero">
-    <div class="subhero-item">Studying at <br> National Forensic Science University</div>
-    <div class="subhero-item">Computer Science,<br> Cybersecurity,<br> Research</div>
-    <div class="subhero-item">C/C++, Lua, OCaml, <br> Emacs, Linux, GNU etc.</div>
-  </div>
+    <!-- 3-Column Central Architectural Grid -->
+    <div class="hero-container">
+      <div class="hero-grid">
 
-  <!-- Projects Section -->
-  <section class="projects">
-    <div class="project-card">
-      <img src="image1.png" alt="Project 1">
+        <!-- COLUMN 1: Name, Tagline, and Gradient "Projects ->" Button -->
+        <div class="hero-col justify-center py-16 pr-6 pl-4 sm:pl-6 lg:pl-0 lg:pr-8">
+          <h1 class="text-[3.5rem] sm:text-[4.5rem] lg:text-[4.9rem] font-bold leading-[1.03] tracking-[-0.03em] text-white mb-7">
+            Mrunal<br />Bhamare
+          </h1>
 
-      <div class="project-content">
-        <h3>Project Sangit</h3>
-        <p>A realtime music composer for nerds</p>
-        <a href="#" class="project-btn-disabled">Comming Soon</a>
+          <p class="text-[1.2rem] sm:text-[1.35rem] font-normal text-white/90 mb-9 tracking-[-0.01em]">
+            Optimizing architectures
+          </p>
+
+          <a href="#projects" class="hero-projects-btn">
+            <span>Projects</span>
+            <span class="arrow-icon text-lg">→</span>
+          </a>
+        </div>
+
+        <!-- COLUMN 2: Bottom "9 YEAR JOURNEY / Skills & Interests" Card -->
+        <div class="hero-col justify-end">
+          <div class="flex-grow min-h-[220px] hero-step-spacer"></div>
+
+          <a href="#skills-interests" class="hero-step-card">
+            <span class="font-mono text-[0.73rem] tracking-[0.1em] uppercase text-gl-muted">
+              9 YEAR JOURNEY
+            </span>
+            <span class="text-[1.25rem] font-semibold text-white tracking-[-0.01em]">
+              Skills &amp; Interests
+            </span>
+          </a>
+        </div>
+
+        <!-- COLUMN 3: Staggered "RECENTS / Updates & Events" Card -->
+        <div class="hero-col justify-end">
+          <div class="flex-grow min-h-[220px] hero-step-spacer"></div>
+
+          <a href="#updates-events" class="hero-step-card">
+            <span class="font-mono text-[0.73rem] tracking-[0.1em] uppercase text-gl-pink">
+              RECENTS
+            </span>
+            <span class="text-[1.25rem] font-semibold text-white tracking-[-0.01em]">
+              Updates &amp; Events
+            </span>
+          </a>
+
+          <!-- 118px step offset so Column 3 card sits diagonally above Column 2 card -->
+          <div class="h-[118px] hidden md:block"></div>
+        </div>
+
       </div>
     </div>
+  </header>
 
-    <div class="project-card">
-      <img src="tinyhms.png" alt="TinyHMS">
-      <div class="project-content">
-        <h3>TinyHMS</h3>
-        <p>A small and efficient Hospitl Management System targeting multiuser, small server and Role Based Access capabilities</p>
-        <a href="https://github.com/mvkbed/TinyHMS" class="project-btn">View Project</a>
+
+  <!-- ==========================================================================
+       SECTION 2: INFINITE SCROLLING PROFILE LOGO MARQUEE (Screenshot 2)
+       ========================================================================== -->
+  <nav id="profiles" class="marquee-bar" aria-label="Social and Profile Links">
+    <div class="marquee-track">
+
+      <!-- SET 1: Primary Profile Links -->
+      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Visit LinkedIn Profile">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">LinkedIn</span>
+      </a>
+
+      <a href="https://github.com/mvkbed" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Visit GitHub Profile">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">GitHub</span>
+      </a>
+
+      <a href="https://youtube.com/@yourusername" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Visit YouTube Channel">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">YouTube</span>
+      </a>
+
+      <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Visit Instagram Profile">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">Instagram</span>
+      </a>
+
+      <a href="mailto:your.email@example.com" class="profile-logo-link" title="Send an Email">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">Email</span>
+      </a>
+
+      <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Open Photo Gallery">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">Photo Gallery</span>
+      </a>
+
+      <a href="#platform-1" class="profile-logo-link" title="[Profile Placeholder 1]">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-6-3 6-3 6 3-6 3zm0 2.5l-10-5v2l10 5 10-5v-2l-10 5zm0 4l-10-5v2l10 5 10-5v-2l-10 5z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight uppercase tracking-wider">[Platform 1]</span>
+      </a>
+
+      <a href="#platform-2" class="profile-logo-link" title="[Profile Placeholder 2]">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight uppercase tracking-wider">[Platform 2]</span>
+      </a>
+
+      <!-- SET 2: Duplicate for Seamless Infinite Loop -->
+      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Visit LinkedIn Profile">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">LinkedIn</span>
+      </a>
+
+      <a href="https://github.com/mvkbed" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Visit GitHub Profile">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">GitHub</span>
+      </a>
+
+      <a href="https://youtube.com/@yourusername" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Visit YouTube Channel">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">YouTube</span>
+      </a>
+
+      <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Visit Instagram Profile">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">Instagram</span>
+      </a>
+
+      <a href="mailto:your.email@example.com" class="profile-logo-link" title="Send an Email">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">Email</span>
+      </a>
+
+      <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="profile-logo-link" title="Open Photo Gallery">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight">Photo Gallery</span>
+      </a>
+
+      <a href="#platform-1" class="profile-logo-link" title="[Profile Placeholder 1]">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-6-3 6-3 6 3-6 3zm0 2.5l-10-5v2l10 5 10-5v-2l-10 5zm0 4l-10-5v2l10 5 10-5v-2l-10 5z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight uppercase tracking-wider">[Platform 1]</span>
+      </a>
+
+      <a href="#platform-2" class="profile-logo-link" title="[Profile Placeholder 2]">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        <span class="text-2xl font-bold tracking-tight uppercase tracking-wider">[Platform 2]</span>
+      </a>
+
+    </div>
+  </nav>
+
+
+  <!-- ==========================================================================
+       MAIN CONTENT LANDMARK (Contains Projects, Skills & Interests, and Updates)
+       ========================================================================== -->
+  <main>
+
+    <!-- ========================================================================
+         SECTION 3: PROJECTS BENTO SECTION (Screenshot 3 + 5 Project Cards)
+         ======================================================================== -->
+    <section id="projects" class="projects-section">
+      <!-- Stepped Gray Band (Extends flush to bottom of section so there is zero white gap) -->
+      <div class="projects-gray-band"></div>
+
+      <!-- Top-Right Pixel Staircase Cluster -->
+      <div class="pixel-step-cluster hidden lg:grid" style="right: 0; top: 152px;">
+        <div></div><div></div><div></div><div></div><div></div><div class="pixel-cell-gray"></div><div></div><div></div>
+        <div></div><div></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div>
+        <div></div><div></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div></div><div class="pixel-cell-gray"></div>
+        <div class="pixel-cell-gray"></div><div></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div>
       </div>
-    </div>
 
-    <div class="project-card">
-      <img src="image3.png" alt="Project 3">
-      <div class="project-content">
-        <h3>[Project Title 3]</h3>
-        <p>[2-3 line description of your project. Explain what it does and technologies used.]</p>
-        <a href="#" class="project-btn-disabled">View Project</a>
+      <!-- Top-Left Pixel Staircase Cluster -->
+      <div class="pixel-step-cluster hidden lg:grid" style="left: 0; top: 228px;">
+        <div class="pixel-cell-gray"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div></div><div class="pixel-cell-gray"></div><div class="pixel-cell-gray"></div><div></div><div></div><div></div>
       </div>
-    </div>
 
-    <div class="project-card">
-      <img src="image4.png" alt="Project 4">
-      <div class="project-content">
-        <h3>[Project Title 4]</h3>
-        <p>[2-3 line description of your project. Explain what it does and technologies used.]</p>
-        <a href="#" class="project-btn-disbaled">View Project</a>
+      <!-- Projects Container -->
+      <div class="relative z-10 max-w-[780px] mx-auto px-4 sm:px-6">
+        <h2 class="text-[2.1rem] sm:text-[2.35rem] font-bold tracking-[-0.025em] text-gl-dark mb-7">
+          Projects
+        </h2>
+
+        <!-- ROW 1: Project Cards 1 & 2 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+
+          <!-- PROJECT CARD 1 -->
+          <article class="gl-project-card">
+            <div class="gl-project-thumb p-6">
+              <div class="w-full max-w-[260px] rounded-lg bg-[#231f2e] border border-white/10 p-3.5 shadow-2xl text-left">
+                <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-white/10">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-orange-500 to-pink-500 inline-block"></span>
+                    <span class="text-[10px] font-medium text-white/90">[Project 1 Preview Placeholder]</span>
+                  </div>
+                  <span class="text-[9px] font-mono text-white/40">v1.0</span>
+                </div>
+                <div class="flex gap-4 text-[9px] text-white/60 border-b border-white/10 pb-1.5 mb-2.5">
+                  <span class="text-orange-400 border-b border-orange-400 pb-1 -mb-1.5 font-medium">Activity</span>
+                  <span>Architecture</span>
+                </div>
+                <div class="space-y-2 text-[9px] text-white/70 font-mono">
+                  <div class="bg-white/5 rounded p-1.5">
+                    <div class="text-white/90 font-sans font-medium">Project Sangit / Module 01</div>
+                    <div class="text-white/40 text-[8px]">Realtime synthesis &amp; composition</div>
+                  </div>
+                  <div class="bg-white/5 rounded p-1.5">
+                    <div class="text-white/90 font-sans font-medium">Pipeline Status</div>
+                    <div class="text-emerald-400 text-[8px]">● Active placeholder image</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-6 flex flex-col flex-grow">
+              <div class="font-mono text-[0.68rem] tracking-[0.08em] uppercase text-gl-textLight mb-3">
+                [ PROJECT CATEGORY PLACEHOLDER 1 ]
+              </div>
+              <h3 class="text-[1.22rem] font-semibold leading-[1.3] text-gl-dark mb-3">
+                [Project Title 1 — e.g., Project Sangit: Realtime Music Composer]
+              </h3>
+              <p class="text-[0.86rem] leading-[1.55] text-gl-textLight mb-5">
+                [2–3 line placeholder description of your project. Explain what it does, how teams or users interact with it, and the core technologies used.]
+              </p>
+              <a href="#project-1-link" class="gl-card-link">
+                <span>[Link Placeholder — View Project]</span>
+                <span class="chevron">›</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- PROJECT CARD 2 -->
+          <article class="gl-project-card">
+            <div class="gl-project-thumb p-6">
+              <div class="grid grid-cols-3 gap-1.5 p-2 rounded-xl bg-[#262330] border border-white/10 w-[168px] h-[168px] shadow-2xl">
+                <div class="bg-[#322e3f] rounded-md flex items-center justify-center text-white/50 text-xs font-mono">&lt;/&gt;</div>
+                <div class="bg-[#322e3f] rounded-md"></div>
+                <div class="bg-[#322e3f] rounded-md"></div>
+                <div class="bg-[#322e3f] rounded-md"></div>
+                <div class="bg-[#201d29] rounded-md flex items-center justify-center">
+                  <span class="w-4 h-4 rounded-sm bg-orange-500 rotate-45 inline-block"></span>
+                </div>
+                <div class="bg-[#322e3f] rounded-md flex items-center justify-center text-white/50 text-xs">🛡</div>
+                <div class="bg-[#322e3f] rounded-md flex items-center justify-center text-white/50 text-xs">⊞</div>
+                <div class="bg-[#322e3f] rounded-md"></div>
+                <div class="bg-[#322e3f] rounded-md flex items-center justify-center text-white/50 text-xs font-mono">∞</div>
+              </div>
+            </div>
+
+            <div class="p-6 flex flex-col flex-grow">
+              <div class="font-mono text-[0.68rem] tracking-[0.08em] uppercase text-gl-textLight mb-3">
+                [ PROJECT CATEGORY PLACEHOLDER 2 ]
+              </div>
+              <h3 class="text-[1.22rem] font-semibold leading-[1.3] text-gl-dark mb-3">
+                [Project Title 2 — e.g., TinyHMS Multiuser Management System]
+              </h3>
+              <p class="text-[0.86rem] leading-[1.55] text-gl-textLight mb-5">
+                [2–3 line placeholder description of your project. E.g., A small and efficient Hospital Management System targeting multiuser, small server, and Role-Based Access capabilities.]
+              </p>
+              <a href="https://github.com/mvkbed/TinyHMS" target="_blank" rel="noopener noreferrer" class="gl-card-link">
+                <span>[Link Placeholder — Explore Project]</span>
+                <span class="chevron">›</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ROW 2: Full-Width Featured Project Card 3 -->
+        <article class="gl-project-card mb-5">
+          <div class="gl-project-thumb-wide p-6">
+            <div class="halftone-overlay"></div>
+            <div class="relative z-10 w-full max-w-[360px] rounded-lg bg-[#171321] border border-white/15 p-4 shadow-2xl text-left">
+              <div class="flex items-center justify-between text-[9px] text-white/50 pb-2 mb-2.5 border-b border-white/10 font-mono">
+                <span>▼ [Project 3 Image / Dashboard Placeholder]</span>
+                <span>Status: Verified</span>
+              </div>
+              <div class="space-y-2.5 font-mono text-[9px]">
+                <div class="flex items-center justify-between bg-white/5 px-2.5 py-1.5 rounded">
+                  <span class="text-white/85">Module Alpha</span>
+                  <div class="flex gap-1">
+                    <span class="w-6 h-1.5 rounded bg-red-400"></span>
+                    <span class="w-8 h-1.5 rounded bg-emerald-400"></span>
+                    <span class="w-5 h-1.5 rounded bg-sky-400"></span>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between bg-white/5 px-2.5 py-1.5 rounded">
+                  <span class="text-white/85">Kernel / Security</span>
+                  <div class="flex gap-1">
+                    <span class="w-4 h-1.5 rounded bg-amber-400"></span>
+                    <span class="w-10 h-1.5 rounded bg-emerald-400"></span>
+                    <span class="w-4 h-1.5 rounded bg-sky-400"></span>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between bg-white/5 px-2.5 py-1.5 rounded">
+                  <span class="text-white/85">OCaml / C++ Core</span>
+                  <div class="flex gap-1">
+                    <span class="w-12 h-1.5 rounded bg-emerald-400"></span>
+                    <span class="w-6 h-1.5 rounded bg-sky-400"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-7 flex flex-col">
+            <div class="font-mono text-[0.68rem] tracking-[0.08em] uppercase text-gl-textLight mb-3">
+              [ PROJECT CATEGORY PLACEHOLDER 3 ]
+            </div>
+            <h3 class="text-[1.28rem] font-semibold leading-[1.3] text-gl-dark mb-2.5">
+              [Project Title 3 — Featured Architecture / Cybersecurity Project Placeholder]
+            </h3>
+            <p class="text-[0.88rem] leading-[1.6] text-gl-textLight mb-5 max-w-[650px]">
+              [2–3 line placeholder description of your featured project. Explain the architecture, benchmarks, security model, or research problem solved, and link to your repository or paper below.]
+            </p>
+            <a href="#project-3-link" class="gl-card-link">
+              <span>[Link Placeholder — Learn more about project]</span>
+              <span class="chevron">›</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- ROW 3: Project Cards 4 & 5 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+          <!-- PROJECT CARD 4 -->
+          <article class="gl-project-card">
+            <div class="gl-project-thumb p-6">
+              <div class="w-full max-w-[260px] rounded-lg bg-[#231f2e] border border-white/10 p-3.5 shadow-2xl text-left font-mono">
+                <div class="flex items-center justify-between pb-2 mb-2.5 border-b border-white/10">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80 inline-block"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/80 inline-block"></span>
+                  </div>
+                  <span class="text-[9px] text-white/40">[Project 4 Image Placeholder]</span>
+                </div>
+                <div class="space-y-1.5 text-[9px] text-white/75">
+                  <div class="text-purple-300">$ ./optimize_arch --target=core</div>
+                  <div class="text-white/50">&gt; Analyzing memory layout...</div>
+                  <div class="text-emerald-400">&gt; Throughput improved by 3.4x</div>
+                  <div class="bg-white/5 rounded p-1.5 mt-2 text-[8px] text-white/60">
+                    Replace this block with &lt;img src="image4.png"&gt;
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-6 flex flex-col flex-grow">
+              <div class="font-mono text-[0.68rem] tracking-[0.08em] uppercase text-gl-textLight mb-3">
+                [ PROJECT CATEGORY PLACEHOLDER 4 ]
+              </div>
+              <h3 class="text-[1.22rem] font-semibold leading-[1.3] text-gl-dark mb-3">
+                [Project Title 4 — Placeholder]
+              </h3>
+              <p class="text-[0.86rem] leading-[1.55] text-gl-textLight mb-5">
+                [2–3 line placeholder description of your 4th project. Explain what it does, its system architecture, and the technologies used.]
+              </p>
+              <a href="#project-4-link" class="gl-card-link">
+                <span>[Link Placeholder — View Project]</span>
+                <span class="chevron">›</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- PROJECT CARD 5 -->
+          <article class="gl-project-card">
+            <div class="gl-project-thumb p-6">
+              <div class="w-full max-w-[260px] rounded-lg bg-[#231f2e] border border-white/10 p-3.5 shadow-2xl text-left">
+                <div class="flex items-center justify-between pb-2 mb-3 border-b border-white/10">
+                  <span class="text-[10px] font-medium text-white/90">[Project 5 Image Placeholder]</span>
+                  <span class="text-[8px] font-mono px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-300">TELEMETRY</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2 mb-2.5">
+                  <div class="bg-white/5 rounded p-2 text-center">
+                    <div class="text-[11px] font-bold text-white">0.4ms</div>
+                    <div class="text-[7px] font-mono text-white/40">LATENCY</div>
+                  </div>
+                  <div class="bg-white/5 rounded p-2 text-center">
+                    <div class="text-[11px] font-bold text-emerald-400">99.9%</div>
+                    <div class="text-[7px] font-mono text-white/40">UPTIME</div>
+                  </div>
+                  <div class="bg-white/5 rounded p-2 text-center">
+                    <div class="text-[11px] font-bold text-purple-300">C / Lua</div>
+                    <div class="text-[7px] font-mono text-white/40">RUNTIME</div>
+                  </div>
+                </div>
+                <div class="bg-white/5 rounded p-1.5 text-[8px] font-mono text-white/50 text-center">
+                  Replace this block with &lt;img src="image5.png"&gt;
+                </div>
+              </div>
+            </div>
+
+            <div class="p-6 flex flex-col flex-grow">
+              <div class="font-mono text-[0.68rem] tracking-[0.08em] uppercase text-gl-textLight mb-3">
+                [ PROJECT CATEGORY PLACEHOLDER 5 ]
+              </div>
+              <h3 class="text-[1.22rem] font-semibold leading-[1.3] text-gl-dark mb-3">
+                [Project Title 5 — Placeholder]
+              </h3>
+              <p class="text-[0.86rem] leading-[1.55] text-gl-textLight mb-5">
+                [2–3 line placeholder description of your 5th project. Explain what it does, its key features, and the technologies used.]
+              </p>
+              <a href="#project-5-link" class="gl-card-link">
+                <span>[Link Placeholder — View Project]</span>
+                <span class="chevron">›</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="project-card">
-      <img src="image5.png" alt="Project 5">
-      <div class="project-content">
-        <h3>[Project Title 5]</h3>
-        <p>[2-3 line description of your project. Explain what it does and technologies used.]</p>
-        <a href="#" class="project-btn-disabled">View Project</a>
+
+    <!-- ========================================================================
+         SECTION 4: SKILLS & INTERESTS STAGGERED DARK PLACEHOLDER MATRIX
+         (Matches Screenshot 4 — "MAKE IT ALL PLACEHOLDER")
+         ======================================================================== -->
+    <section id="skills-interests" class="skills-section">
+      <!-- Top Centered Heading & Subtitle Block -->
+      <div class="max-w-[760px] mx-auto text-center px-6 pt-20 pb-16">
+        <h2 class="text-[2.2rem] sm:text-[2.75rem] font-bold leading-[1.12] tracking-[-0.025em] text-white mb-4">
+          [Section Heading Placeholder<br />Built for Your Domain]
+        </h2>
+        <p class="text-[0.95rem] sm:text-[1.02rem] leading-[1.6] text-gl-muted max-w-[580px] mx-auto">
+          [Subheading placeholder — Replace with your summary of skills, research areas, and engineering domains such as C/C++, Lua, OCaml, Linux, Cybersecurity, and National Forensic Science University.]
+        </p>
       </div>
+
+      <!-- Staggered 4-Row × 3-Column Dark Checkerboard Matrix -->
+      <div class="skills-matrix-surface">
+
+        <!-- Left Decorative Dark Pixel Cluster (Matches Screenshot 4 left edge) -->
+        <div class="pixel-step-cluster hidden xl:grid" style="left: 0; top: 152px;">
+          <div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div></div><div></div><div></div>
+          <div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div></div><div></div><div></div><div></div><div></div>
+          <div></div><div class="dark-pixel-block"></div><div></div><div class="dark-pixel-block"></div><div></div><div></div><div></div><div></div>
+        </div>
+
+        <!-- Right Decorative Dark Pixel Cluster (Matches Screenshot 4 right edge) -->
+        <div class="pixel-step-cluster hidden xl:grid" style="right: 0; bottom: 0;">
+          <div></div><div></div><div></div><div></div><div></div><div class="dark-pixel-block"></div><div></div><div></div>
+          <div></div><div></div><div></div><div class="dark-pixel-block"></div><div></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div>
+          <div></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div><div class="dark-pixel-block"></div>
+        </div>
+
+        <div class="staggered-matrix-grid">
+
+          <!-- ==================== ROW 1 (Card in Col 1, Empty Col 2 & 3) ==================== -->
+          <!-- Row 1, Col 1: Filled Placeholder Card 1 -->
+          <div class="matrix-cell">
+            <div class="matrix-filled-card">
+              <div class="matrix-card-header">
+                [ PLACEHOLDER CATEGORY 1 ]
+              </div>
+              <div class="matrix-card-body">
+                <div>
+                  <div class="text-[2.65rem] font-normal leading-none tracking-tight text-white mb-2">
+                    [1M / Stat 1]
+                  </div>
+                  <p class="text-[0.8rem] text-white/80 leading-snug">
+                    [Placeholder description 1 — e.g., Systems &amp; Architecture]
+                  </p>
+                </div>
+                <div class="pt-5 font-bold tracking-wider text-sm uppercase text-white flex items-center gap-2">
+                  <span>●</span>
+                  <span>[LOGO / TAG 1]</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Row 1, Col 2: Empty Cell -->
+          <div class="matrix-cell matrix-cell-empty"></div>
+          <!-- Row 1, Col 3: Empty Cell -->
+          <div class="matrix-cell matrix-cell-empty"></div>
+
+
+          <!-- ==================== ROW 2 (Empty Col 1, Cards in Col 2 & 3) ==================== -->
+          <!-- Row 2, Col 1: Empty Cell -->
+          <div class="matrix-cell matrix-cell-empty"></div>
+          <!-- Row 2, Col 2: Filled Placeholder Card 2 -->
+          <div class="matrix-cell">
+            <div class="matrix-filled-card">
+              <div class="matrix-card-header">
+                [ PLACEHOLDER CATEGORY 2 ]
+              </div>
+              <div class="matrix-card-body">
+                <div>
+                  <div class="text-[2.65rem] font-normal leading-none tracking-tight text-white mb-2">
+                    [13x / Stat 2]
+                  </div>
+                  <p class="text-[0.8rem] text-white/80 leading-snug">
+                    [Placeholder description 2 — e.g., C/C++, Lua &amp; OCaml]
+                  </p>
+                </div>
+                <div class="pt-5 font-serif font-bold tracking-widest text-sm uppercase text-white underline decoration-white/40 underline-offset-4">
+                  [LOGO / TAG 2]
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Row 2, Col 3: Filled Placeholder Card 3 -->
+          <div class="matrix-cell">
+            <div class="matrix-filled-card">
+              <div class="matrix-card-header">
+                [ PLACEHOLDER CATEGORY 3 ]
+              </div>
+              <div class="matrix-card-body">
+                <div>
+                  <div class="text-[2.65rem] font-normal leading-none tracking-tight text-white mb-2">
+                    [6x / Stat 3]
+                  </div>
+                  <p class="text-[0.8rem] text-white/80 leading-snug">
+                    [Placeholder description 3 — e.g., Cybersecurity &amp; Research]
+                  </p>
+                </div>
+                <div class="pt-5 font-mono font-bold text-sm uppercase text-white">
+                  [LOGO / TAG 3]
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ==================== ROW 3 (Card in Col 1, Empty Col 2 & 3) ==================== -->
+          <!-- Row 3, Col 1: Filled Placeholder Card 4 -->
+          <div class="matrix-cell">
+            <div class="matrix-filled-card">
+              <div class="matrix-card-header">
+                [ PLACEHOLDER CATEGORY 4 ]
+              </div>
+              <div class="matrix-card-body">
+                <div>
+                  <div class="text-[2.65rem] font-normal leading-none tracking-tight text-white mb-2">
+                    [99% / Stat 4]
+                  </div>
+                  <p class="text-[0.8rem] text-white/80 leading-snug">
+                    [Placeholder description 4 — e.g., Linux, GNU &amp; Emacs]
+                  </p>
+                </div>
+                <div class="pt-5 font-sans font-bold tracking-widest text-sm uppercase text-white">
+                  [LOGO / TAG 4]
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Row 3, Col 2: Empty Cell -->
+          <div class="matrix-cell matrix-cell-empty"></div>
+          <!-- Row 3, Col 3: Empty Cell -->
+          <div class="matrix-cell matrix-cell-empty"></div>
+
+
+          <!-- ==================== ROW 4 (Empty Col 1, Cards in Col 2 & 3) ==================== -->
+          <!-- Row 4, Col 1: Empty Cell -->
+          <div class="matrix-cell matrix-cell-empty"></div>
+          <!-- Row 4, Col 2: Filled Placeholder Card 5 -->
+          <div class="matrix-cell">
+            <div class="matrix-filled-card">
+              <div class="matrix-card-header">
+                [ PLACEHOLDER CATEGORY 5 ]
+              </div>
+              <div class="matrix-card-body">
+                <div>
+                  <div class="text-[2.65rem] font-normal leading-none tracking-tight text-white mb-2">
+                    [60% / Stat 5]
+                  </div>
+                  <p class="text-[0.8rem] text-white/80 leading-snug">
+                    [Placeholder description 5 — e.g., National Forensic Science Univ.]
+                  </p>
+                </div>
+                <div class="pt-5 flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-white">
+                  <span class="w-5 h-5 rounded-full bg-white text-gl-dark inline-flex items-center justify-center font-mono text-[10px]">5</span>
+                  <span>[LOGO / TAG 5]</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Row 4, Col 3: Filled Placeholder Card 6 -->
+          <div class="matrix-cell">
+            <div class="matrix-filled-card">
+              <div class="matrix-card-header">
+                [ PLACEHOLDER CATEGORY 6 ]
+              </div>
+              <div class="matrix-card-body">
+                <div>
+                  <div class="text-[2.65rem] font-normal leading-none tracking-tight text-white mb-2">
+                    [80x / Stat 6]
+                  </div>
+                  <p class="text-[0.8rem] text-white/80 leading-snug">
+                    [Placeholder description 6 — e.g., Sim Racing &amp; Achievements]
+                  </p>
+                </div>
+                <div class="pt-5 text-xs font-bold tracking-widest uppercase text-white flex items-center gap-1.5">
+                  <span>[LOGO / TAG 6]</span>
+                  <span>✦</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================
+         SECTION 5: UPDATES & EVENTS (Auto-Generated from `news.csv`
+         using format: date,title,body,link_name,link_address)
+         ======================================================================== -->
+    <section id="updates-events" class="bg-gl-dark border-b border-white/10 py-16">
+      <div class="max-w-[1020px] mx-auto px-6">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+          <div>
+            <span class="font-mono text-xs uppercase tracking-[0.12em] text-gl-pink block mb-2">
+              [ RECENTS &amp; CHANGELOG ]
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Updates &amp; Events
+            </h2>
+          </div>
+        </div>
+
+        <!-- Auto-generated Grid Wrapper populated exclusively by news.csv -->
+        <div id="newsContainer"></div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ==========================================================================
+       SECTION 6: FOOTER (Screenshot 5)
+       ========================================================================== -->
+  <footer id="footer" class="bg-gl-dark pt-14 pb-20 text-white">
+    <div class="max-w-[1020px] mx-auto px-6">
+
+      <!-- Top Social Icons Row -->
+      <div class="flex items-center gap-6 mb-7 text-white/85">
+        <a href="https://x.com/yourusername" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" aria-label="X / Twitter Placeholder">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+        <a href="https://github.com/mvkbed" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" aria-label="GitHub">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+          </svg>
+        </a>
+        <a href="https://youtube.com/@yourusername" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" aria-label="YouTube">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" aria-label="LinkedIn">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Crisp Horizontal Divider Line -->
+      <hr class="border-t border-white/75 mb-7" />
+
+      <!-- Two-Line Placeholder Footer Text -->
+      <div class="space-y-3 text-[0.84rem] leading-[1.6] text-[#d5d4da] font-normal">
+        <p>
+          [Placeholder footer line 1 — Modernizing Legacy &amp; Optimizing Architectures. Replace with your license, disclaimer, or personal tagline.]
+        </p>
+        <p>
+          © 2026 [Mrunal Bhamare / Placeholder Organization Name].
+        </p>
+      </div>
+
     </div>
-  </section>
+  </footer>
 
-  <!-- Social Links -->
-  <section class="social">
-    <a href="https://youtube.com/@yourusername" title="YouTube">▶</a>
-    <a href="https://instagram.com/yourusername" title="Instagram">📷</a>
-    <a href="https://linkedin.com/in/yourusername" title="LinkedIn">in</a>
-    <a href="https://github.com/yourusername" title="GitHub">🐙</a>
-    <a href="mailto:your.email@example.com" title="Email">✉</a>
-    <a href="https://google.com" title="Photo Gallery" class="project-btn" style="font-size:1rem;padding:0.5rem 1rem">Gallery</a>
-    <a href="#" title="[Platform 1]">●</a>
-    <a href="#" title="[Platform 2]">●</a>
-  </section>
 
-  <!-- Achievements & Hobby Section -->
-  <section class="achievements">
-    <div class="achievement-card">
-      <img src="achievement1.png" alt="Achievement 1">
-      <h3>[Event Name & Award - Year]</h3>
-    </div>
+  <!-- ==========================================================================
+       SCRIPTS:
+       1. Interactive Halftone Dot Matrix with Mouse Glow (Hero)
+       2. Dynamic `news.csv` Auto-Generator (`date,title,body,link_name,link_address`)
+       ========================================================================== -->
+  <script>
+    /* --------------------------------------------------------------------------
+       1. HERO INTERACTIVE DOT MATRIX CANVAS
+       -------------------------------------------------------------------------- */
+    (function initHeroCanvas() {
+      const canvas = document.getElementById('hero-dot-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
 
-    <div class="achievement-card">
-      <img src="achievement2.png" alt="Achievement 2">
-      <h3>[Event Name & Award - Year]</h3>
-    </div>
+      let width = 0;
+      let height = 0;
+      let mouseX = -1000;
+      let mouseY = -1000;
+      let targetX = -1000;
+      let targetY = -1000;
 
-    <div class="achievement-card">
-      <img src="achievement3.png" alt="Achievement 3">
-      <h3>[Event Name & Award - Year]</h3>
-    </div>
+      function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        width = canvas.width = rect.width;
+        height = canvas.height = rect.height;
+        if (targetX === -1000) {
+          targetX = width * 0.61;
+          targetY = height * 0.46;
+          mouseX = targetX;
+          mouseY = targetY;
+        }
+      }
 
-    <div class="achievement-card">
-      <img src="achievement4.png" alt="Achievement 4">
-      <h3>[Event Name & Award - Year]</h3>
-    </div>
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
 
-    <div class="achievement-card">
-      <img src="simracing.png" alt="Sim Racing">
-      <h3>Sim Racing Enthusiast</h3>
-    </div>
-  </section>
+      const heroEl = document.getElementById('top');
+      heroEl.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        targetX = e.clientX - rect.left;
+        targetY = e.clientY - rect.top;
+      });
 
-  <!-- News/Blog Section -->
-  <section class="news-container">
-    <h2>Updates</h2>
-    <div class="news-scroll" id="newsContainer">
-      <p style="text-align:center;color:#bdc3c7">Loading news...</p>
-    </div>
-  </section>
+      function renderDots() {
+        ctx.clearRect(0, 0, width, height);
 
-</div>
+        mouseX += (targetX - mouseX) * 0.12;
+        mouseY += (targetY - mouseY) * 0.12;
 
-<!-- Footer -->
-<footer class="container">
-  <div class="footer-left">Modernizing Legacy</div>
-  <div class="footer-right">© Mrunal 2026</div>
-</footer>
+        const spacing = 8;
+        const glowRadius = 155;
 
-<script>
-// Fetch and display news from CSV
-fetch('news.csv')
-  .then(r=>r.text())
-  .then(data=>{
-    const lines=data.trim().split('\n');
-    const container=document.getElementById('newsContainer');
-    if(lines.length<2){container.innerHTML='<p style="text-align:center;color:#bdc3c7">No news available</p>';return}
-    container.innerHTML='';
-    for(let i=1;i<lines.length;i++){
-      const match=lines[i].match(/^"([^"]*)","([^"]*)","([^"]*)","([^"]*)"$/);
-      if(!match)continue;
-      const[,title,date,body,link]=match;
-      const item=document.createElement('div');
-      item.className='news-item';
-      item.innerHTML=`<h3>${title}</h3><div class="news-date">${date}</div><div class="news-body">${body}</div><a href="${link}" class="news-link">Learn more...</a>`;
-      container.appendChild(item);
-    }
-  })
-  .catch(()=>{
-    document.getElementById('newsContainer').innerHTML='<p style="text-align:center;color:#bdc3c7">Unable to load news</p>';
-  });
-</script>
+        for (let x = spacing / 2; x < width; x += spacing) {
+          for (let y = spacing / 2; y < height; y += spacing) {
+            const dx = x - mouseX;
+            const dy = y - mouseY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
 
+            const wave = Math.sin(x * 0.006 + y * 0.005) * Math.cos(y * 0.008 - x * 0.004);
+            let baseAlpha = wave > 0.15 ? 0.11 : 0.035;
+
+            if (dist < glowRadius) {
+              const intensity = Math.pow(1 - dist / glowRadius, 1.6);
+              const r = 235;
+              const g = Math.round(65 + (1 - intensity) * 40);
+              const b = Math.round(145 + intensity * 40);
+              const alpha = Math.min(0.85, baseAlpha + intensity * 0.72);
+              ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+              ctx.fillRect(x, y, 1.7, 1.7);
+            } else if (baseAlpha > 0.05) {
+              ctx.fillStyle = `rgba(255, 255, 255, ${baseAlpha})`;
+              ctx.fillRect(x, y, 1.2, 1.2);
+            }
+          }
+        }
+
+        requestAnimationFrame(renderDots);
+      }
+
+      requestAnimationFrame(renderDots);
+    })();
+
+    /* --------------------------------------------------------------------------
+       2. DYNAMIC `news.csv` AUTO-GENERATOR
+          Format: date,title,body,link_name,link_address
+       -------------------------------------------------------------------------- */
+    (function loadNewsCSV() {
+      const container = document.getElementById('newsContainer');
+      if (!container) return;
+
+      function parseCSVRow(line) {
+        const fields = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+          const nextChar = line[i + 1];
+
+          if (char === '"') {
+            if (inQuotes && nextChar === '"') {
+              current += '"';
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (char === ',' && !inQuotes) {
+            fields.push(current.trim());
+            current = '';
+          } else {
+            current += char;
+          }
+        }
+        fields.push(current.trim());
+        return fields;
+      }
+
+      function escapeHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str || '';
+        return div.innerHTML;
+      }
+
+      fetch('news.csv')
+        .then((response) => {
+          if (!response.ok) throw new Error('Unable to load news.csv');
+          return response.text();
+        })
+        .then((csvText) => {
+          const rawLines = csvText
+            .split(/\r?\n/)
+            .map((l) => l.trim())
+            .filter((l) => l.length > 0);
+
+          if (rawLines.length === 0) {
+            container.innerHTML = '<p class="text-sm font-mono text-gl-muted">No updates available.</p>';
+            return;
+          }
+
+          const firstRow = parseCSVRow(rawLines[0]).map((col) => col.toLowerCase());
+          const hasHeader = firstRow[0] === 'date' && firstRow[1] === 'title';
+          const startIndex = hasHeader ? 1 : 0;
+          const items = [];
+
+          for (let i = startIndex; i < rawLines.length; i++) {
+            const cols = parseCSVRow(rawLines[i]);
+            if (cols.length < 3) continue;
+            const [date, title, body, link_name = 'Learn more', link_address = '#'] = cols;
+            items.push({ date, title, body, link_name, link_address });
+          }
+
+          if (items.length === 0) {
+            container.innerHTML = '<p class="text-sm font-mono text-gl-muted">No updates available.</p>';
+            return;
+          }
+
+          const grid = document.createElement('div');
+          grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5';
+
+          items.forEach((item) => {
+            const card = document.createElement('article');
+            card.className = 'bg-gl-card hover:bg-gl-cardHover border border-white/10 p-6 flex flex-col justify-between transition-colors';
+
+            const linkHTML = item.link_name && item.link_address
+              ? `<a href="${escapeHTML(item.link_address)}" class="text-sm font-medium text-white hover:text-gl-pink transition-colors inline-flex items-center gap-1.5 mt-2">
+                   <span>${escapeHTML(item.link_name)}</span>
+                   <span>→</span>
+                 </a>`
+              : '';
+
+            card.innerHTML = `
+              <div>
+                <div class="font-mono text-xs text-gl-muted mb-2">${escapeHTML(item.date)}</div>
+                <h3 class="text-lg font-semibold text-white mb-2 leading-snug">${escapeHTML(item.title)}</h3>
+                <p class="text-sm text-gl-muted leading-relaxed mb-4">${escapeHTML(item.body)}</p>
+              </div>
+              ${linkHTML}
+            `;
+
+            grid.appendChild(card);
+          });
+
+          container.innerHTML = '';
+          container.appendChild(grid);
+        })
+        .catch(() => {
+          container.innerHTML = `
+            <div class="border border-dashed border-white/15 bg-gl-card/50 p-6 text-center">
+              <p class="font-mono text-xs text-gl-muted">
+                Waiting for <code class="text-white">news.csv</code> (format: <code class="text-white">date,title,body,link_name,link_address</code>)
+              </p>
+            </div>
+          `;
+        });
+    })();
+  </script>
 </body>
 </html>
